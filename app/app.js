@@ -18,8 +18,14 @@ class App {
         this.app.use(express_1.default.json());
         this.app.use(express_1.default.urlencoded({ extended: false }));
         this.app.use(cors_1.default());
-        this.app.use(express_1.default.static('build'));
-        this.app.use("/", express_1.default.static(__dirname + '/build'));
+        this.app.use(express_1.default.static("build"));
+        this.app.use("/", express_1.default.static(__dirname + "/build"));
+        this.app.use(function (request, response, next) {
+            if (process.env.NODE_ENV != "development" && !request.secure) {
+                return response.redirect("https://" + request.headers.host + request.url);
+            }
+            next();
+        });
     }
     controller(controllers) {
         controllers.forEach((controller) => {

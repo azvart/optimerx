@@ -19,8 +19,17 @@ class App {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(cors());
-    this.app.use(express.static('build'));
-    this.app.use("/",express.static(__dirname + '/build'));
+    this.app.use(express.static("build"));
+    this.app.use("/", express.static(__dirname + "/build"));
+    this.app.use(function (request, response, next) {
+      if (process.env.NODE_ENV != "development" && !request.secure) {
+        return response.redirect(
+          "https://" + request.headers.host + request.url
+        );
+      }
+
+      next();
+    });
   }
   private controller(controllers: []) {
     controllers.forEach((controller: any) => {
@@ -29,15 +38,16 @@ class App {
   }
 
   private connectedToDb() {
- 
     mongoose
-      .connect(`mongodb+srv://optimerx:3377@example.3acev.mongodb.net/myFirstDatabase?retryWrites=true&w=majority/Example`, {
-        
-        useCreateIndex: true,
-        useNewUrlParser: true,
-        useFindAndModify: false,
-        useUnifiedTopology: true,
-      })
+      .connect(
+        `mongodb+srv://optimerx:3377@example.3acev.mongodb.net/myFirstDatabase?retryWrites=true&w=majority/Example`,
+        {
+          useCreateIndex: true,
+          useNewUrlParser: true,
+          useFindAndModify: false,
+          useUnifiedTopology: true,
+        }
+      )
       .then(() => {
         console.log(`Connected to DB successfull`);
       });
