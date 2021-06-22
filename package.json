@@ -4,7 +4,9 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "server": "nodemon server.ts"
+
+        "server": "nodemon server.js",
+        "build": "tsc --watch"
     },
     "keywords": [],
     "author": "",
