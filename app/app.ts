@@ -29,23 +29,18 @@ class App {
   }
 
   private connectedToDb() {
-    const uri = `mongodb+srv://optimerx:3377@example.3acev.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
-    const client = new MongoClient(uri,{useNewUrlParser:true,useUnifiedTopology:true});
-    client.connect(err=>{
-      const collection = client.db("Example");
-      client.close();
-    })
-    // mongoose
-    //   .connect(`mongodb+srv://optimerx:3377@example.3acev.mongodb.net/myFirstDatabase?retryWrites=true&w=majority/Example`, {
+ 
+    mongoose
+      .connect(`mongodb+srv://optimerx:3377@example.3acev.mongodb.net/myFirstDatabase?retryWrites=true&w=majority/Example`, {
         
-    //     useCreateIndex: true,
-    //     useNewUrlParser: true,
-    //     useFindAndModify: false,
-    //     useUnifiedTopology: true,
-    //   })
-    //   .then(() => {
-    //     console.log(`Connected to DB successfull`);
-    //   });
+        useCreateIndex: true,
+        useNewUrlParser: true,
+        useFindAndModify: false,
+        useUnifiedTopology: true,
+      })
+      .then(() => {
+        console.log(`Connected to DB successfull`);
+      });
   }
   public listen() {
     this.app.listen(this.port, () => {
