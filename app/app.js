@@ -7,8 +7,6 @@ const express_1 = __importDefault(require("express"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const cors_1 = __importDefault(require("cors"));
 class App {
-    app;
-    port;
     constructor(controllers, port) {
         this.app = express_1.default();
         this.port = port;
@@ -30,7 +28,7 @@ class App {
     }
     connectedToDb() {
         mongoose_1.default
-            .connect(`mongodb://localhost:27017/Example`, {
+            .connect(`mongodb+srv://optimerx:3377@example.3acev.mongodb.net/myFirstDatabase?retryWrites=true&w=majority/Example`, {
             useCreateIndex: true,
             useNewUrlParser: true,
             useFindAndModify: false,
