@@ -29,7 +29,7 @@ class App {
 
   private connectedToDb() {
     mongoose
-      .connect(`mongodb://localhost:27017/Example`, {
+      .connect(`mongodb+srv://optimerx:3377@example.3acev.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`, {
         useCreateIndex: true,
         useNewUrlParser: true,
         useFindAndModify: false,
