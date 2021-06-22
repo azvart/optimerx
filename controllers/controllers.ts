@@ -15,7 +15,7 @@ class Controllers {
   public Routes() {
     this.router.post("/model", this.get_name);
     this.router.get("/model", this.get_all_pharm);
-    this.router.get("/zips", this.get_all_zips);
+
     this.router.post("/zips", this.get_current_zip);
     this.router.post("/price", Token, this.get_price);
   }
@@ -39,14 +39,11 @@ class Controllers {
 
     return res.status(200).json(JSON.parse(all));
   };
-  get_all_zips = async (req: Request, res: Response) => {
-    const all = await Zip.findAll();
-    return res.status(200).json(all);
-  };
 
   get_current_zip = async (req: Request, res: Response) => {
+    console.log(req.body.zip);
     const current = await Zip.findByZip(req.body.zip);
-    return res.status(200).json(current);
+    return res.json(current);
   };
 
   get_price = async (req: Request, res: Response) => {

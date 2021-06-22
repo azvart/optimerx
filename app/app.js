@@ -1,5 +1,5 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
+var __importDefault = (this && this.__importDefault) || function(mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -16,33 +16,28 @@ class App {
     }
     middleware() {
         this.app.use(express_1.default.json());
-        this.app.use(express_1.default.urlencoded({ extended: false }));
+        this.app.use(express_1.default.urlencoded({ extended: true }));
         this.app.use(cors_1.default());
         this.app.use(express_1.default.static("build"));
-        this.app.use("/", express_1.default.static(__dirname + "/build"));
-        this.app.use(function (request, response, next) {
-            if (process.env.NODE_ENV != "development" && !request.secure) {
-                return response.redirect("https://" + request.headers.host + request.url);
-            }
-            next();
-        });
     }
     controller(controllers) {
-        controllers.forEach((controller) => {
-            this.app.use("/", controller.router);
-        });
-    }
+            controllers.forEach((controller) => {
+                this.app.use("/", controller.router);
+            });
+        }
+        // `mongodb://localhost:27017/Example`
+        // `mongodb+srv://optimerx:3377@example.3acev.mongodb.net/myFirstDatabase?retryWrites=true&w=majority/Example`
     connectedToDb() {
         mongoose_1.default
-            .connect(`mongodb+srv://optimerx:3377@example.3acev.mongodb.net/myFirstDatabase?retryWrites=true&w=majority/Example`, {
-            useCreateIndex: true,
-            useNewUrlParser: true,
-            useFindAndModify: false,
-            useUnifiedTopology: true,
-        })
+            .connect(`mongodb+srv://optimerx:3377@example.3acev.mongodb.net/Example`, {
+                useCreateIndex: true,
+                useNewUrlParser: true,
+                useFindAndModify: false,
+                useUnifiedTopology: true,
+            })
             .then(() => {
-            console.log(`Connected to DB successfull`);
-        });
+                console.log(`Connected to DB successfull`);
+            });
     }
     listen() {
         this.app.listen(this.port, () => {

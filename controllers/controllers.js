@@ -30,13 +30,10 @@ class Controllers {
             const all = await fs_1.default.readFileSync("med.json", "utf-8");
             return res.status(200).json(JSON.parse(all));
         };
-        this.get_all_zips = async (req, res) => {
-            const all = await example_zip_model_1.default.findAll();
-            return res.status(200).json(all);
-        };
         this.get_current_zip = async (req, res) => {
+            console.log(req.body.zip);
             const current = await example_zip_model_1.default.findByZip(req.body.zip);
-            return res.status(200).json(current);
+            return res.json(current);
         };
         this.get_price = async (req, res) => {
             const search = req.body.location !== undefined
@@ -70,7 +67,6 @@ class Controllers {
     Routes() {
         this.router.post("/model", this.get_name);
         this.router.get("/model", this.get_all_pharm);
-        this.router.get("/zips", this.get_all_zips);
         this.router.post("/zips", this.get_current_zip);
         this.router.post("/price", accessToken_1.default, this.get_price);
     }

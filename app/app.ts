@@ -1,5 +1,4 @@
 import express, { Application, Request, Response, NextFunction } from "express";
-import { MongoClient } from "mongodb";
 import mongoose from "mongoose";
 import cors from "cors";
 import Token from "../middleware/accessToken";
@@ -17,26 +16,17 @@ class App {
 
   private middleware() {
     this.app.use(express.json());
-    this.app.use(express.urlencoded({ extended: false }));
+    this.app.use(express.urlencoded({ extended: true }));
     this.app.use(cors());
     this.app.use(express.static("build"));
-    this.app.use("/", express.static(__dirname + "/build"));
-    this.app.use(function (request, response, next) {
-      if (process.env.NODE_ENV != "development" && !request.secure) {
-        return response.redirect(
-          "https://" + request.headers.host + request.url
-        );
-      }
-
-      next();
-    });
   }
   private controller(controllers: []) {
     controllers.forEach((controller: any) => {
       this.app.use("/", controller.router);
     });
   }
-
+  // `mongodb://localhost:27017/Example`
+  // `mongodb+srv://optimerx:3377@example.3acev.mongodb.net/myFirstDatabase?retryWrites=true&w=majority/Example`
   private connectedToDb() {
     mongoose
       .connect(
